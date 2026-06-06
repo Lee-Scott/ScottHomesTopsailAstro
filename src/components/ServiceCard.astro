@@ -1,0 +1,13 @@
+---
+const { service } = Astro.props;
+---
+
+<article class="group overflow-hidden rounded-sm border border-sky-950/10 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl hover:shadow-sky-950/10">
+  <img class="h-56 w-full object-cover" src={service.image} alt="" />
+  <div class="p-6">
+    <p class="text-xs font-black uppercase tracking-wide text-sky-700">{service.eyebrow}</p>
+    <h3 class="mt-2 text-2xl font-black text-sky-950">{service.title}</h3>
+    <p class="mt-3 text-sm leading-6 text-slate-600">{service.summary}</p>
+    <a class="mt-5 inline-flex rounded-sm bg-sky-950 px-4 py-2 text-sm font-black text-white transition group-hover:bg-sky-700" href={service.href}>Read More</a>
+  </div>
+</article>

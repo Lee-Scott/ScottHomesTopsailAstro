@@ -1,0 +1,24 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CommunityCard from '../components/CommunityCard.astro';
+import CTASection from '../components/CTASection.astro';
+import { communities, communitiesOverview } from '../data/communities';
+---
+
+<Layout title="Topsail Area Communities | Scott Homes" description="Explore Topsail Island and nearby North Carolina coastal communities including Hampstead, Surf City, North Topsail Beach, Sneads Ferry, Topsail Beach, Wilmington, and more.">
+  <section class="bg-sand px-4 py-16 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-7xl">
+      <p class="text-sm font-black uppercase tracking-wide text-sky-700">Communities</p>
+      <h1 class="mt-3 max-w-4xl text-4xl font-black text-sky-950 sm:text-5xl">Explore Topsail Island and surrounding coastal markets.</h1>
+      <div class="mt-6 max-w-4xl space-y-4 text-base leading-8 text-slate-650">
+        {communitiesOverview.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+    </div>
+  </section>
+  <section class="px-4 py-14 sm:px-6 lg:px-8">
+    <div class="mx-auto grid max-w-7xl gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {communities.map((community) => <CommunityCard community={community} />)}
+    </div>
+  </section>
+  <CTASection eyebrow="Need help comparing communities?" title="Call Tad for a local read on the right fit." />
+</Layout>

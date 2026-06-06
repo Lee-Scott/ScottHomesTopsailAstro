@@ -1,0 +1,105 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import RecentSalesTable from '../components/RecentSalesTable.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import CommunityCard from '../components/CommunityCard.astro';
+import CTASection from '../components/CTASection.astro';
+import { services } from '../data/services';
+import { communities } from '../data/communities';
+import { business } from '../data/site';
+---
+
+<Layout title="Scott Homes | Topsail Island Real Estate" description="Tad Scott Homes provides local Topsail Island real estate guidance for buyers, sellers, free home valuation, and new construction.">
+  <Hero />
+  <RecentSalesTable />
+
+  <section class="bg-sand px-4 py-14 sm:px-6 lg:px-8">
+    <div class="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
+      <div class="grid gap-6 md:grid-cols-[0.72fr_1fr] md:items-center">
+        <div class="overflow-hidden rounded-sm border border-sky-950/10 bg-white shadow-lg shadow-sky-950/10">
+          <img class="h-full min-h-[280px] w-full object-cover object-top" src="/assets/tad-scott.webp" alt="Tad Scott" />
+        </div>
+        <div>
+          <p class="text-sm font-black uppercase tracking-wide text-sky-700">Local trust and experience</p>
+          <h2 class="mt-3 text-3xl font-black text-sky-950 sm:text-4xl">Work directly with Tad Scott.</h2>
+          <p class="mt-4 text-base leading-7 text-slate-650">
+            With over 20 years of experience developing and building on Topsail Island, I, Tad Scott, am uniquely qualified to help you sell or buy your island dream home. My extensive knowledge of the local market ensures you receive the best guidance possible.
+          </p>
+          <div class="mt-5 grid gap-3 sm:grid-cols-3">
+            <div class="rounded-sm border border-sky-950/10 bg-white px-4 py-3 shadow-sm">
+              <p class="text-xs font-black uppercase tracking-wide text-sky-700">Experience</p>
+              <p class="mt-1 text-sm font-bold text-sky-950">20+ years local building and real estate knowledge</p>
+            </div>
+            <div class="rounded-sm border border-sky-950/10 bg-white px-4 py-3 shadow-sm">
+              <p class="text-xs font-black uppercase tracking-wide text-sky-700">Markets served</p>
+              <p class="mt-1 text-sm font-bold text-sky-950">Topsail Island, Surf City, Hampstead, Sneads Ferry, and Wilmington</p>
+            </div>
+            <div class="rounded-sm border border-sky-950/10 bg-white px-4 py-3 shadow-sm">
+              <p class="text-xs font-black uppercase tracking-wide text-sky-700">How Tad helps</p>
+              <p class="mt-1 text-sm font-bold text-sky-950">Buying, selling, valuation, and new construction guidance</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="rounded-sm border border-sky-950/10 bg-white p-6 shadow-lg shadow-sky-950/10">
+        <p class="text-sm font-black uppercase tracking-wide text-sky-700">Local guidance</p>
+        <p class="mt-3 text-lg font-black text-sky-950">Buy, sell, value, or build with local context at every step.</p>
+        <p class="mt-3 text-sm leading-6 text-slate-650">Work with one local point of contact from the first conversation through pricing, property search, negotiations, and the details that matter in coastal homes.</p>
+        <div class="mt-5 flex flex-col gap-3 sm:flex-row lg:flex-col">
+          <a class="rounded-sm bg-sky-950 px-5 py-3 text-center text-sm font-black text-white hover:bg-sky-800" href={business.phoneHref}>Call {business.phone}</a>
+          <a class="rounded-sm border border-sky-950/15 px-5 py-3 text-center text-sm font-black text-sky-950 hover:border-sky-700" href={business.emailHref}>Email Tad</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-sand px-4 py-14 sm:px-6 lg:px-8">
+    <div class="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+      <div>
+        <p class="text-sm font-black uppercase tracking-wide text-sky-700">Free Home Valuation</p>
+        <h2 class="mt-3 text-3xl font-black text-sky-950 sm:text-4xl">A direct local valuation conversation.</h2>
+        <p class="mt-4 text-base leading-7 text-slate-650">
+          Considering selling your home? Tad offers a free, no-obligation valuation for Wilmington, Topsail Beach, Surf City, North Topsail Beach, and surrounding areas. The review is based on local experience and comparable sales he knows and understands.
+        </p>
+      </div>
+      <div class="rounded-sm border border-sky-950/10 bg-white p-6 shadow-lg shadow-sky-950/10">
+        <p class="text-lg font-black text-sky-950">Get a direct opinion on your property.</p>
+        <p class="mt-2 text-sm leading-6 text-slate-600">Call or email Tad directly for a free local valuation conversation based on comparable sales, neighborhood context, condition, presentation, and current buyer demand.</p>
+        <div class="mt-5 flex flex-col gap-3 sm:flex-row">
+          <a class="rounded-sm bg-sky-950 px-5 py-3 text-center text-sm font-black text-white hover:bg-sky-800" href="/free-home-valuation/">Free Home Valuation</a>
+          <a class="rounded-sm border border-sky-950/15 px-5 py-3 text-center text-sm font-black text-sky-950 hover:border-sky-700" href={business.emailHref}>Email Tad</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="px-4 py-14 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-7xl">
+      <div class="max-w-3xl">
+        <p class="text-sm font-black uppercase tracking-wide text-sky-700">Local guidance</p>
+        <h2 class="mt-3 text-3xl font-black text-sky-950 sm:text-4xl">Buying, selling, and building at the coast</h2>
+      </div>
+      <div class="mt-8 grid gap-6 md:grid-cols-3">
+        {services.map((service) => <ServiceCard service={service} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-sky-50 px-4 py-14 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-7xl">
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div class="max-w-3xl">
+          <p class="text-sm font-black uppercase tracking-wide text-sky-700">Explore communities</p>
+          <h2 class="mt-3 text-3xl font-black text-sky-950 sm:text-4xl">Topsail Island and nearby markets</h2>
+        </div>
+        <a class="text-sm font-black text-sky-700 hover:text-sky-950" href="/communities/">View all communities</a>
+      </div>
+      <div class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {communities.map((community) => <CommunityCard community={community} />)}
+      </div>
+    </div>
+  </section>
+
+  <CTASection />
+</Layout>

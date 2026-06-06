@@ -1,0 +1,44 @@
+---
+import { business } from '../data/site';
+
+const {
+  eyebrow = 'Topsail Island real estate',
+  title = 'Scott Homes: Local guidance for Topsail Island buyers and sellers',
+  text = 'Work directly with Tad Scott for local insight across Topsail Island, Surf City, North Topsail Beach, Hampstead, Sneads Ferry, Wilmington, and nearby coastal markets.',
+  image = '/assets/hero-beach.webp',
+  primaryLabel = 'Free Home Valuation',
+  primaryHref = '/free-home-valuation/',
+  secondaryLabel = 'Call 919-360-6754',
+  secondaryHref = business.phoneHref,
+} = Astro.props;
+---
+
+<section class="relative isolate min-h-[620px] overflow-hidden bg-sky-950 text-white">
+  <img class="absolute inset-0 -z-20 h-full w-full object-cover" src={image} alt="" />
+  <div class="absolute inset-0 -z-10 bg-gradient-to-r from-sky-950/88 via-sky-950/56 to-sky-900/12"></div>
+  <div class="mx-auto flex min-h-[620px] max-w-7xl items-center px-4 py-20 sm:px-6 lg:px-8">
+    <div class="max-w-3xl">
+      <p class="text-sm font-black uppercase tracking-wide text-sky-200">{eyebrow}</p>
+      <h1 class="mt-4 text-4xl font-black tracking-normal sm:text-6xl">{title}</h1>
+      <p class="mt-5 max-w-2xl text-lg leading-8 text-sky-50/88">{text}</p>
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+        <a class="rounded-sm bg-sky-300 px-5 py-3 text-center text-sm font-black text-sky-950 transition hover:bg-white" href={primaryHref}>{primaryLabel}</a>
+        <a class="rounded-sm border border-white/40 px-5 py-3 text-center text-sm font-black text-white transition hover:bg-white/10" href={secondaryHref}>{secondaryLabel}</a>
+      </div>
+      <dl class="mt-10 grid max-w-3xl grid-cols-1 gap-3 sm:grid-cols-3">
+        <div class="border border-white/20 bg-sky-950/35 p-4 backdrop-blur">
+          <dt class="text-xs font-black uppercase tracking-wide text-sky-100">Local experience</dt>
+          <dd class="mt-1 text-xl font-black sm:text-2xl">20+ years on and around Topsail</dd>
+        </div>
+        <div class="border border-white/20 bg-sky-950/35 p-4 backdrop-blur">
+          <dt class="text-xs font-black uppercase tracking-wide text-sky-100">Coastal market insight</dt>
+          <dd class="mt-1 text-xl font-black sm:text-2xl">Island, mainland, and nearby communities</dd>
+        </div>
+        <div class="border border-white/20 bg-sky-950/35 p-4 backdrop-blur">
+          <dt class="text-xs font-black uppercase tracking-wide text-sky-100">Direct guidance</dt>
+          <dd class="mt-1 text-xl font-black sm:text-2xl">Buying, selling, valuation, and new construction</dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+</section>

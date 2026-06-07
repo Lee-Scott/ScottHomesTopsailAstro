@@ -19,13 +19,23 @@ import { business, navItems } from '../data/site';
       </div>
       <div class="space-y-2 text-sm">
         <p class="text-xs font-black uppercase tracking-wide text-sky-300">Call or email</p>
-        <a class="block rounded-md border border-sky-500 bg-sky-800 px-3 py-2 font-bold text-white transition hover:border-sky-300 hover:bg-sky-700" href={business.phoneHref}>{business.phone}</a>
-        <a class="block rounded-md border border-sky-500 bg-sky-800 px-3 py-2 font-bold text-white transition hover:border-sky-300 hover:bg-sky-700" href={business.emailHref}>{business.email}</a>
+        <a class="inline-flex items-center gap-1.5 font-bold text-sky-200 transition hover:text-white hover:underline" href={business.phoneHref}>
+          <span class="text-base">📞</span> {business.phone}
+        </a>
+        <br />
+        <a class="inline-flex items-center gap-1.5 font-bold text-sky-200 transition hover:text-white hover:underline" href={business.emailHref}>
+          <span class="text-base">✉️</span> {business.email}
+        </a>
       </div>
       <div class="space-y-2 text-sm">
         <p class="text-xs font-black uppercase tracking-wide text-sky-300">Profiles</p>
-        <a class="block rounded-md border border-sky-500 bg-sky-800 px-3 py-2 font-bold text-white transition hover:border-sky-300 hover:bg-sky-700" href={business.facebook} target="_blank" rel="noopener noreferrer">Facebook</a>
-        <a class="block rounded-md border border-sky-500 bg-sky-800 px-3 py-2 font-bold text-white transition hover:border-sky-300 hover:bg-sky-700" href={business.zillow} target="_blank" rel="noopener noreferrer">Zillow</a>
+        <a class="inline-flex items-center gap-1.5 font-bold text-sky-200 transition hover:text-white hover:underline" href={business.facebook} target="_blank" rel="noopener noreferrer">
+          <span class="text-base">🔗</span> Facebook
+        </a>
+        <br />
+        <a class="inline-flex items-center gap-1.5 font-bold text-sky-200 transition hover:text-white hover:underline" href={business.zillow} target="_blank" rel="noopener noreferrer">
+          <span class="text-base">🔗</span> Zillow
+        </a>
       </div>
     </div>
   </section>

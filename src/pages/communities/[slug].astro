@@ -13,18 +13,21 @@ export function getStaticPaths() {
 }
 
 const { community } = Astro.props;
-const related = communities.filter((item) => item.slug !== community.slug).slice(0, 3);
+const related = communities.filter((item) => item.slug !== community.slug);
 const hasSections = community.sections && community.sections.length > 0;
 const hasQuickSnapshot = community.quickSnapshot && community.quickSnapshot.length > 0;
 
+// Pick a couple of auxiliary images for article breaks (not the community's own image)
+const breakImages = ['/assets/surf-city-bridge.webp', '/assets/topsail-beach.jpg'];
+
 // Function to check if highlight is a contact link and return appropriate rendering
-const parseHighlight = (text) => {
+const parseHighlight = (text: string) => {
   if (text.includes('Call or text Tad')) {
-    return { type: 'contact-dual', phone: true, sms: true };
+    return { type: 'contact-dual' as const };
   } else if (text.startsWith('Email')) {
-    return { type: 'contact-email' };
+    return { type: 'contact-email' as const };
   }
-  return { type: 'text', content: text };
+  return { type: 'text' as const, content: text };
 };
 ---
 
@@ -32,7 +35,7 @@ const parseHighlight = (text) => {
   <!-- Hero Section -->
   <section class="relative overflow-hidden bg-sky-950 px-4 py-20 text-white sm:px-6 lg:px-8">
     <img class="absolute inset-0 h-full w-full object-cover opacity-40" src={community.image} alt="" />
-    <div class="absolute inset-0 bg-gradient-to-r from-sky-950/98 via-sky-950/85 to-sky-950/50"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-sky-950/98 via-sky-950/92 to-sky-950/60"></div>
     <div class="relative mx-auto max-w-7xl">
       <p class="text-sm font-black uppercase tracking-wide text-sky-300">Community guide</p>
       <h1 class="mt-3 text-4xl font-black sm:text-5xl text-white">{community.name}</h1>
@@ -40,96 +43,164 @@ const parseHighlight = (text) => {
     </div>
   </section>
 
-  <!-- Quick Snapshot Cards Section -->
-  {hasQuickSnapshot && (
-    <section class="px-4 py-12 sm:px-6 lg:px-8">
-      <div class="mx-auto max-w-6xl">
-        <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {community.quickSnapshot.map((item) => (
-            <div class="rounded-lg border border-sky-950/15 bg-white p-4 shadow-sm">
-              <h3 class="text-xs font-black uppercase tracking-wide text-sky-700">{item.label}</h3>
-              <p class="mt-2 text-sm leading-5 text-slate-650">{item.text}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  )}
+  <!-- Desktop: Two-column layout | Mobile: single column -->
+  <div class="px-4 py-10 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-7xl lg:grid lg:grid-cols-[1fr_300px] lg:gap-10">
 
-  <!-- Highlights Section -->
-  <section class="bg-sky-50 px-4 py-12 sm:px-6 lg:px-8">
-    <div class="mx-auto max-w-6xl">
-      <h2 class="text-2xl font-black text-sky-950">Key Takeaways</h2>
-      <div class="mt-6 space-y-2">
-        {community.highlights.map((highlight) => {
-          const parsed = parseHighlight(highlight);
-          return parsed.type === 'contact-dual' ? (
-            <div class="flex items-center gap-2">
-              <span class="flex-shrink-0 text-sky-600 font-black">✓</span>
-              <div class="flex gap-2 flex-wrap">
-                <a href={business.phoneHref} class="text-sm font-bold text-white bg-sky-700 hover:bg-sky-800 px-3 py-1 rounded transition">Call Tad</a>
-                <a href={`sms:+19193606754`} class="text-sm font-bold text-white bg-sky-700 hover:bg-sky-800 px-3 py-1 rounded transition">Text Tad</a>
-              </div>
-            </div>
-          ) : parsed.type === 'contact-email' ? (
-            <div class="flex items-center gap-2">
-              <span class="flex-shrink-0 text-sky-600 font-black">✓</span>
-              <a href={business.emailHref} class="text-sm font-bold text-white bg-sky-700 hover:bg-sky-800 px-3 py-1 rounded transition">Email Tad</a>
-            </div>
-          ) : (
-            <div class="flex items-start gap-2">
-              <span class="mt-1 flex-shrink-0 text-sky-600 font-black">✓</span>
-              <p class="text-sm text-slate-700">{highlight}</p>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  </section>
-
-  <!-- Main Content: Sections (if they exist) or Fallback -->
-  {hasSections ? (
-    <section class="px-4 py-12 sm:px-6 lg:px-8">
-      <div class="mx-auto max-w-3xl">
-        <div class="space-y-10">
-          {community.sections.map((section) => (
-            <div class="space-y-3">
-              <h2 class="text-3xl font-black text-sky-950">{section.heading}</h2>
+      <!-- ===== MAIN ARTICLE COLUMN ===== -->
+      <div class="min-w-0">
+        {hasSections ? (
+          <div class="space-y-8">
+            {community.sections.map((section, i) => (
               <div class="space-y-3">
-                {section.body.map((paragraph) => (
-                  <p class="text-base leading-7 text-slate-650">{paragraph}</p>
+                <h2 class="text-2xl font-black text-sky-950 lg:text-3xl">{section.heading}</h2>
+                <div class="space-y-3">
+                  {section.body.map((paragraph) => (
+                    <p class="text-base leading-7 text-slate-650">{paragraph}</p>
+                  ))}
+                </div>
+                {/* Image breaks: insert after sections 1, 3, and 5 if they exist */}
+                {(i === 1 || i === 3 || i === 5) && breakImages[i === 1 ? 0 : i === 3 ? 1 : 0] && (
+                  <img
+                    class="mt-6 rounded-lg w-full max-h-80 object-cover shadow-md hidden lg:block"
+                    src={breakImages[i === 1 ? 0 : i === 3 ? 1 : 0]}
+                    alt=""
+                    loading="lazy"
+                  />
+                )}
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div class="space-y-4 text-base leading-7 text-slate-650">
+            <h2 class="text-3xl font-black text-sky-950">What to know about {community.name}</h2>
+            <p>{community.summary}</p>
+            <p>For buyers, the right fit often depends on pace of life, beach or mainland access, property type, budget, and how you plan to use the home. For sellers, local pricing and presentation matter because each Topsail-area community has its own demand patterns.</p>
+            <p>Tad Scott can help compare this community against nearby options and give you a practical read on current opportunities.</p>
+          </div>
+        )}
+      </div>
+
+      <!-- ===== RIGHT SIDEBAR (desktop only) ===== -->
+      <aside class="hidden lg:block">
+        <div class="sticky top-24 space-y-6">
+
+          {/* Quick Snapshot */}
+          {hasQuickSnapshot && (
+            <div class="rounded-lg border border-sky-950/10 bg-white p-4 shadow-sm">
+              <h3 class="text-xs font-black uppercase tracking-wide text-sky-700 mb-3">Quick Snapshot</h3>
+              <div class="space-y-3">
+                {community.quickSnapshot.map((item) => (
+                  <div>
+                    <p class="text-[11px] font-black uppercase tracking-wide text-sky-600">{item.label}</p>
+                    <p class="mt-0.5 text-xs leading-5 text-slate-650">{item.text}</p>
+                  </div>
                 ))}
               </div>
             </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  ) : (
-    <section class="px-4 py-12 sm:px-6 lg:px-8">
-      <div class="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1.1fr_0.9fr]">
-        <div class="space-y-4 text-base leading-7 text-slate-650">
-          <h2 class="text-3xl font-black text-sky-950">What to know about {community.name}</h2>
-          <p>{community.summary}</p>
-          <p>For buyers, the right fit often depends on pace of life, beach or mainland access, property type, budget, and how you plan to use the home. For sellers, local pricing and presentation matter because each Topsail-area community has its own demand patterns.</p>
-          <p>Tad Scott can help compare this community against nearby options and give you a practical read on current opportunities.</p>
-        </div>
-        <aside class="rounded-sm border border-sky-950/10 bg-sky-50 p-5">
-          <h2 class="text-lg font-black text-sky-950">Highlights</h2>
-          <ul class="mt-3 space-y-2">
-            {community.highlights.map((highlight) => (
-              <li class="rounded-sm bg-white px-3 py-2 text-xs font-bold text-slate-700 shadow-sm">{highlight}</li>
-            ))}
-          </ul>
-        </aside>
-      </div>
-    </section>
-  )}
+          )}
 
-  <!-- Compare Nearby Communities Section -->
+          {/* Key Takeaways */}
+          <div class="rounded-lg border border-sky-950/10 bg-sky-50 p-4 shadow-sm">
+            <h3 class="text-xs font-black uppercase tracking-wide text-sky-700 mb-3">Key Takeaways</h3>
+            <div class="space-y-2">
+              {community.highlights.map((highlight) => {
+                const parsed = parseHighlight(highlight);
+                return parsed.type === 'contact-dual' ? (
+                  <div class="flex flex-col gap-1.5">
+                    <a href={business.phoneHref} class="inline-flex items-center justify-center rounded-md bg-sky-700 px-3 py-2 text-xs font-bold text-white transition hover:bg-sky-800">
+                      📞 Call Tad
+                    </a>
+                    <a href="sms:+19193606754" class="inline-flex items-center justify-center rounded-md bg-sky-700 px-3 py-2 text-xs font-bold text-white transition hover:bg-sky-800">
+                      💬 Text Tad
+                    </a>
+                  </div>
+                ) : parsed.type === 'contact-email' ? (
+                  <a href={business.emailHref} class="inline-flex items-center justify-center rounded-md bg-sky-700 px-3 py-2 text-xs font-bold text-white transition hover:bg-sky-800 w-full">
+                    ✉️ Email Tad
+                  </a>
+                ) : (
+                  <div class="flex items-start gap-2">
+                    <span class="mt-0.5 flex-shrink-0 text-sky-600 font-black text-xs">✓</span>
+                    <p class="text-xs leading-5 text-slate-700">{highlight}</p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Sticky Contact Card */}
+          <div class="rounded-lg border border-sky-950/15 bg-sky-950 p-4 shadow-md text-white">
+            <h3 class="text-xs font-black uppercase tracking-wide text-sky-300 mb-3">Talk to Tad</h3>
+            <p class="text-xs leading-5 text-sky-100 mb-3">Get a local read on {community.name} before you make a move.</p>
+            <div class="space-y-2">
+              <a href={business.phoneHref} class="block rounded-md bg-sky-500 px-3 py-2 text-center text-xs font-bold text-white transition hover:bg-sky-400">
+                {business.phone}
+              </a>
+              <a href={business.emailHref} class="block rounded-md border border-sky-400 bg-transparent px-3 py-2 text-center text-xs font-bold text-white transition hover:bg-sky-800">
+                {business.email}
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  {/* Mobile/Tablet: Quick Snapshot + Key Takeaways (visible only below lg) */}
+  <div class="lg:hidden">
+    {hasQuickSnapshot && (
+      <section class="px-4 py-8 sm:px-6">
+        <div class="mx-auto max-w-6xl">
+          <div class="grid gap-3 sm:grid-cols-2">
+            {community.quickSnapshot.map((item) => (
+              <div class="rounded-lg border border-sky-950/15 bg-white p-4 shadow-sm">
+                <h3 class="text-xs font-black uppercase tracking-wide text-sky-700">{item.label}</h3>
+                <p class="mt-2 text-sm leading-5 text-slate-650">{item.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <section class="bg-sky-50 px-4 py-8 sm:px-6">
+      <div class="mx-auto max-w-6xl">
+        <h2 class="text-2xl font-black text-sky-950">Key Takeaways</h2>
+        <div class="mt-4 space-y-2">
+          {community.highlights.map((highlight) => {
+            const parsed = parseHighlight(highlight);
+            return parsed.type === 'contact-dual' ? (
+              <div class="flex items-center gap-2">
+                <span class="flex-shrink-0 text-sky-600 font-black">✓</span>
+                <div class="flex gap-2 flex-wrap">
+                  <a href={business.phoneHref} class="text-sm font-bold text-white bg-sky-700 hover:bg-sky-800 px-3 py-1 rounded transition">Call Tad</a>
+                  <a href="sms:+19193606754" class="text-sm font-bold text-white bg-sky-700 hover:bg-sky-800 px-3 py-1 rounded transition">Text Tad</a>
+                </div>
+              </div>
+            ) : parsed.type === 'contact-email' ? (
+              <div class="flex items-center gap-2">
+                <span class="flex-shrink-0 text-sky-600 font-black">✓</span>
+                <a href={business.emailHref} class="text-sm font-bold text-white bg-sky-700 hover:bg-sky-800 px-3 py-1 rounded transition">Email Tad</a>
+              </div>
+            ) : (
+              <div class="flex items-start gap-2">
+                <span class="mt-1 flex-shrink-0 text-sky-600 font-black">✓</span>
+                <p class="text-sm text-slate-700">{highlight}</p>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Compare Communities Section -->
   <section class="bg-sand px-4 py-12 sm:px-6 lg:px-8">
     <div class="mx-auto max-w-6xl">
-      <h2 class="text-2xl font-black text-sky-950">Compare nearby communities</h2>
+      <h2 class="text-2xl font-black text-sky-950">Explore Topsail-area communities</h2>
       <div class="mt-6 grid gap-4 md:grid-cols-3">
         {related.map((item) => <CommunityCard community={item} />)}
       </div>

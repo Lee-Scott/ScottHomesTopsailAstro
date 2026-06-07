@@ -4,37 +4,34 @@ import { business, navItems } from '../data/site';
 
 <footer class="bg-sky-950 text-white">
   <section class="border-b border-white/10">
-    <div class="mx-auto grid max-w-7xl gap-6 px-4 py-8 sm:px-6 lg:grid-cols-[1.4fr_1fr_1fr] lg:items-start lg:px-8">
-      <div class="space-y-3">
+    <div class="mx-auto grid max-w-7xl gap-6 px-4 py-6 sm:px-6 lg:grid-cols-[1.4fr_1fr_1fr] lg:items-start lg:px-8">
+      <div class="space-y-2">
         <div class="flex items-center gap-3">
           <img class="h-12 w-auto rounded-sm bg-white p-1" src="/assets/scott-homes-logo.png" alt="Scott Homes logo" />
           <div>
-            <p class="text-sm font-black uppercase tracking-wide text-sky-200">Scott Homes</p>
-            <p class="text-sm font-bold text-white">Topsail Island Real Estate</p>
+            <p class="text-sm font-black uppercase tracking-wide text-sky-300">Scott Homes</p>
+            <p class="text-xs font-bold text-sky-100">Topsail Island Real Estate</p>
           </div>
         </div>
-        <p class="max-w-2xl text-base font-semibold text-white">
+        <p class="max-w-2xl text-sm font-semibold text-white">
           Local guidance for buying, selling, free valuation, and new construction along the Topsail coast.
         </p>
-        <p class="max-w-xl text-sm leading-6 text-sky-100/80">
-          Work directly with Tad Scott for practical advice across Topsail Island and surrounding coastal North Carolina communities.
-        </p>
       </div>
-      <div class="space-y-3 text-sm">
-        <p class="text-xs font-black uppercase tracking-wide text-sky-200">Call or email</p>
-        <a class="block rounded-sm border border-sky-300/25 bg-sky-900/60 px-4 py-3 font-black text-white transition hover:border-sky-200 hover:bg-sky-900" href={business.phoneHref}>{business.phone}</a>
-        <a class="block rounded-sm border border-sky-300/25 bg-sky-900/60 px-4 py-3 font-black text-white transition hover:border-sky-200 hover:bg-sky-900" href={business.emailHref}>{business.email}</a>
+      <div class="space-y-2 text-sm">
+        <p class="text-xs font-black uppercase tracking-wide text-sky-300">Call or email</p>
+        <a class="block rounded-md border border-sky-500 bg-sky-800 px-3 py-2 font-bold text-white transition hover:border-sky-300 hover:bg-sky-700" href={business.phoneHref}>{business.phone}</a>
+        <a class="block rounded-md border border-sky-500 bg-sky-800 px-3 py-2 font-bold text-white transition hover:border-sky-300 hover:bg-sky-700" href={business.emailHref}>{business.email}</a>
       </div>
-      <div class="space-y-3 text-sm">
-        <p class="text-xs font-black uppercase tracking-wide text-sky-200">Profiles</p>
-        <a class="block rounded-sm border border-sky-300/25 bg-sky-900/60 px-4 py-3 font-black text-white transition hover:border-sky-200 hover:bg-sky-900" href={business.facebook} target="_blank" rel="noopener noreferrer">Facebook</a>
-        <a class="block rounded-sm border border-sky-300/25 bg-sky-900/60 px-4 py-3 font-black text-white transition hover:border-sky-200 hover:bg-sky-900" href={business.zillow} target="_blank" rel="noopener noreferrer">Zillow</a>
+      <div class="space-y-2 text-sm">
+        <p class="text-xs font-black uppercase tracking-wide text-sky-300">Profiles</p>
+        <a class="block rounded-md border border-sky-500 bg-sky-800 px-3 py-2 font-bold text-white transition hover:border-sky-300 hover:bg-sky-700" href={business.facebook} target="_blank" rel="noopener noreferrer">Facebook</a>
+        <a class="block rounded-md border border-sky-500 bg-sky-800 px-3 py-2 font-bold text-white transition hover:border-sky-300 hover:bg-sky-700" href={business.zillow} target="_blank" rel="noopener noreferrer">Zillow</a>
       </div>
     </div>
   </section>
-  <div class="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-5 text-sm sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
-    <p class="font-semibold text-sky-100/85">Copyright (c) 2026 Scott Homes</p>
-    <nav class="flex flex-wrap gap-x-4 gap-y-2 text-sky-100/90" aria-label="Footer navigation">
+  <div class="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-4 text-xs sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
+    <p class="font-semibold text-sky-100">(c) 2026 Scott Homes</p>
+    <nav class="flex flex-wrap gap-x-4 gap-y-2 text-sky-100" aria-label="Footer navigation">
       {navItems.map((item) => <a class="font-bold transition hover:text-white" href={item.href}>{item.label}</a>)}
     </nav>
   </div>

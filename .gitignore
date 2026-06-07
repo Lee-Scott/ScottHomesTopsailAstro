@@ -27,3 +27,9 @@ pnpm-debug.log*
 qa-screenshots/
 preview*.log
 preview*.err.log
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example
